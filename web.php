@@ -4,69 +4,38 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
  
-// Passing parameter in Route 
-// Route::get('/post/{id?}', function (string $value = null) {
-//     if ($value) {
-//         return "<h1>Post ID : " . $value . "</h1>";
-//     } else{
-//         return "<h1>No ID found</h1>";
-//     }
-// });
 
-// Passing parameter and comments in URL Route
-// Route::get('/post/{id?}/comment/{commentid}', function (string $value = null, string $comment = null) {
-//     if ($value) {
-//         return "<h1>Post ID : " . $value . "</h1><h2>Post ID : " . $comment . "</h2>";
-//     } else{
-//         return "<h1>No ID found</h1>";
-//     }
-// });
-
-// Route constraints
-// Route::get('/post/{id?}', function (string $value = null) {
-//     if ($value) {
-//         return "<h1>Post ID : " . $value . "</h1>";
-//     } else{
-//         return "<h1>No ID found</h1>";
-//     }
-// })-> whereNumber('id');
-
-// Route::get('/post/{id?}', function (string $value = null) {
-//     if ($value) {
-//         return "<h1>Post ID : " . $value . "</h1>";
-//     } else{
-//         return "<h1>No ID found</h1>";
-//     }
-// })-> whereAlpha('value');
-
-// Route::get('/post/{id?}', function (string $value = null) {
-//     if ($value) {
-//         return "<h1>Post ID : " . $value . "</h1>";
-//     } else{
-//         return "<h1>No ID found</h1>";
-//     }
-// })-> whereAlphaNumeric('value');
-
-
-Route::get('/post/{id?}', function (string $value = null) {
-    if ($value) {
-        return "<h1>Post ID : " . $value . "</h1>";
-    } else{
-        return "<h1>No ID found</h1>";
-    }
-})-> whereIn('id', ['PHP', 'Printing', 'Laravel']);
-
-
-
-Route::get('/post/firstpost', function () {
-    return view('firstpost');
+// Group Route
+Route::prefix('page')->group(function(){
+    Route::get('/about', function(){
+        return "<h1>About Page</h1>";
+    });
+    Route::get('/galery',function(){
+        return "<h1>Gallery Page</h1>";
+    });
+    Route::get('post/firstpost', function(){
+        return "<h1>First Post Page</h1>";
+    });
 });
-// Route :: view('/post', 'post'); single line view
+
+Route::fallback(function(){
+    return "<h1>Page not found</h1>";  // Fallback function if the page dosenot fund it will show the message
+});
+
+// Route::get('about', function(){
+//     return view('about');
+// });
+
+// Route::get('/postss', function(){
+//     return view('post');
+// })->name('mypost'); // Route named Solotion if we changed the route name it will work properly
 
 
-// User will se Hello page URL , in Backgroud another page will run
-// Route::get('/Hello', function () {
-    // return view('post'); 
-//  });
+// Route::get('test', function(){
+//     return view('about');
+// });
+
+// Route::redirect('/about','/test', 301); // Redirect usefull for search engine. 
+// //IF we make changes in URL the Redirect will get the url of about page
